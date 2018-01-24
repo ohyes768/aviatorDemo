@@ -1,0 +1,1986 @@
+﻿[
+    {
+        "mapping": [
+            {
+                "to": "startTime",
+                "value": "func(toVal(${collectorReceiptTime}))"
+            }
+        ],
+        "condition": "${startTime}==null",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "time",
+                "value": "func(toUnixUsec(${startTime}))"
+            }
+        ],
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "priority",
+                "value": "0"
+            }
+        ],
+        "condition": "${severity.int}==0",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "priority",
+                "value": "0"
+            }
+        ],
+        "condition": "${dvcSeverity}=='7'",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "priority",
+                "value": "1"
+            }
+        ],
+        "condition": "${dvcSeverity}=='5' || ${dvcSeverity}=='6'",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "priority",
+                "value": "2"
+            }
+        ],
+        "condition": "${dvcSeverity}=='4'",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "priority",
+                "value": "3"
+            }
+        ],
+        "condition": "${dvcSeverity}=='1' || ${dvcSeverity}=='2' || ${dvcSeverity}=='3'",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "priority",
+                "value": "4"
+            }
+        ],
+        "condition": "${dvcSeverity}=='0'",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "priority",
+                "value": "1"
+            }
+        ],
+        "condition": "${severity.int}==1 || ${severity.int}==2",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "priority",
+                "value": "4"
+            }
+        ],
+        "condition": "${severity.int}>=7",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "priority",
+                "value": "2"
+            }
+        ],
+        "condition": "${severity.int}==3",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "priority",
+                "value": "3"
+            }
+        ],
+        "condition": "${severity.int}>=4 && ${severity.int}<=6",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "inc_name",
+                "value": "func(toVal(${productVendorName}))"
+            }
+        ],
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "dev_type",
+                "value": "func(toVal(${deviceSendProductName}))"
+            }
+        ],
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "sip",
+                "value": "func(toVal(${srcAddress}))"
+            }
+        ],
+        "condition": "ipV4(${srcAddress})",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "dip",
+                "value": "func(toVal(${destAddress}))"
+            }
+        ],
+        "condition": "ipV4(${destAddress})",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "sipv6",
+                "value": "func(toVal(${srcAddress}))"
+            }
+        ],
+        "condition": "ipV6(${srcAddress})",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "dipv6",
+                "value": "func(toVal(${destAddress}))"
+            }
+        ],
+        "condition": "ipV6(${destAddress})",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "smac",
+                "value": "func(toVal(${srcMacAddress}))"
+            }
+        ],
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "dmac",
+                "value": "func(toVal(${destMacAddress}))"
+            }
+        ],
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "sport",
+                "value": "func(toVal(${srcPort}))"
+            }
+        ],
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "dport",
+                "value": "func(toVal(${destPort}))"
+            }
+        ],
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "APT事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "APT事件"
+            }
+        ],
+        "condition": "(${deviceSendProductName}=='安恒APT攻击（网络战）预警机' || ${deviceSendProductName}=='天阗APT系统') && ${originator}=='true'",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "APT事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "其它"
+            }
+        ],
+        "condition": "(${deviceSendProductName}=='安恒APT攻击（网络战）预警机' || ${deviceSendProductName}=='天阗APT系统') && (${originator}=='false' || ${originator}==null)",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "其它"
+            }
+        ],
+        "condition": "${catTechnique}=='/Exploit/Vulnerability' || contains(${name},'漏洞利用') || regex(${name},'(?i:Exploit)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "SQL注入"
+            }
+        ],
+        "condition": "${catTechnique}=='/Exploit/Vulnerability/SQLInjection' || (contains(${name},'SQL') && contains(${name},'注入')) || regex(${name},'(?i:SQL\\s*Injection)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "URL跳转"
+            }
+        ],
+        "condition": "contains(${name},'页面跳转')  || regex(${name},'(?i:url跳转)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "代码执行"
+            }
+        ],
+        "condition": "${catTechnique}=='/Exploit/Vulnerability/CodeInjection' || contains(${name},'代码注入') || contains(${name},'代码执行') || regex(${name},'(?i:Code\\s*(?:Injection|excute))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "非授权访问/权限绕过"
+            }
+        ],
+        "condition": "${catTechnique}=='/InformationLeak/UnauthorizedAccess' || contains(${name},'非授权访问') || contains(${name},'绕过')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "跨站脚本攻击（XSS）"
+            }
+        ],
+        "condition": "${catTechnique}=='/Redirection/Application/CrossSiteScripting' || (contains(${name},'跨站') && contains(${name},'脚本')) || regex(${name},'(?i:Cross\\s*Site|XSS)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "跨站请求伪造（CSRF）"
+            }
+        ],
+        "condition": "(contains(${name},'跨站') && contains(${name},'伪造')) || regex(${name},'(?i:CSRF)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "逻辑/设计错误"
+            }
+        ],
+        "condition": "contains(${name},'逻辑错误') || contains(${name},'设计错误')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "信息泄漏"
+            }
+        ],
+        "condition": "${catTechnique}=='/InformationLeak' || contains(${name},'泄漏') || contains(${name},'泄露') || regex(${name},'(?i:InformationLeak)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "敏感信息/重要文件泄漏"
+            }
+        ],
+        "condition": "contains(${name},'敏感信息泄漏') || contains(${name},'重要文件泄漏') || contains(${name},'敏感信息泄露') || contains(${name},'重要文件泄露')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "命令执行"
+            }
+        ],
+        "condition": "${catTechnique}=='/Exploit/Vulnerability/FormatString' || contains(${name},'命令执行') || regex(${name},'(?i:cmd\\s*Injection)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "弱口令"
+            }
+        ],
+        "condition": "${catTechnique}=='/Exploit/WeakConfiguration' || contains(${name},'弱口令') || regex(${name},'(?i:weak\\s*password)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "配置不当/错误"
+            }
+        ],
+        "condition": "(contains(${name},'配置不当') || contains(${name},'配置错误')) && (contains(${name},'攻击') || contains(${name},'attack'))",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "默认配置不当"
+            }
+        ],
+        "condition": "contains(${name},'弱配置') || (contains(${name},'默认配置不当') && (contains(${name},'攻击') || contains(${name},'attack')))",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "系统/服务配置不当"
+            }
+        ],
+        "condition": "(contains(${name},'系统配置不当') || contains(${name},'服务配置不当')) && (contains(${name},'攻击') || contains(${name},'attack'))",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "目录遍历"
+            }
+        ],
+        "condition": "${catTechnique}=='/Exploit/DirectoryTraversal' || contains(${name},'目录遍历') || contains(${name},'目录穿越') || regex(${name},'(?i:Traversal)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "权限许可和访问控制"
+            }
+        ],
+        "condition": "${catTechnique}=='/Exploit/PrivilegeEscalation' || contains(${name},'非法访问')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "文件包含"
+            }
+        ],
+        "condition": "contains(${name},'文件包含')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "文件读取"
+            }
+        ],
+        "condition": "(contains(${name},'文件读取') && contains(${name},'攻击')) || contains(${name},'非法文件读取')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "文件上传"
+            }
+        ],
+        "condition": "(contains(${name},'文件上传') && contains(${name},'攻击')) || contains(${name},'非法文件上传')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "文件下载"
+            }
+        ],
+        "condition": "(contains(${name},'文件下载') && contains(${name},'攻击')) || contains(${name},'非法文件下载')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "文件写入"
+            }
+        ],
+        "condition": "(contains(${name},'文件写入') && contains(${name},'攻击')) || contains(${name},'非法文件写入')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "溢出攻击"
+            }
+        ],
+        "condition": "${catTechnique}=='/Exploit/Vulnerability/BufferOverflows' || contains(${name},'溢出攻击') || regex(${name},'(?i:overflows)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "浏览器劫持"
+            }
+        ],
+        "condition": "contains(${name},'浏览器') && contains(${name},'劫持')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "暴力猜解"
+            }
+        ],
+        "condition": "${catTechnique}=='/BruteForce/Login' || contains(${name},'猜解') || contains(${name},'暴力破解')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "网络钓鱼"
+            }
+        ],
+        "condition": "contains(${name},'钓鱼') || contains(${name},'fish')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "恶意样本执行"
+            }
+        ],
+        "condition": "contains(${name},'恶意样本执行')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "恶意样本投递"
+            }
+        ],
+        "condition": "contains(${name},'恶意样本投递')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "攻击利用事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "webshell上传"
+            }
+        ],
+        "condition": "contains(${name},'webshell上传')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "其它"
+            }
+        ],
+        "condition": "(contains(${name},'恶意') && contains(${name},'软件')) || regex(${name},'(?i:malicious)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "木马"
+            },
+            {
+                "to": "classCAtaackType",
+                "value": "未知木马"
+            }
+        ],
+        "condition": "${catTechnique}=='/Code/Virus' || ${catTechnique}=='/Code/Trojan' || contains(${name},'木马') || regex(${name},'(?i:Trojan)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "木马"
+            },
+            {
+                "to": "classCAttackType",
+                "value": "盗号木马"
+            }
+        ],
+        "condition": "contains(${name},'盗号木马')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "木马"
+            },
+            {
+                "to": "classCAttackType",
+                "value": "网银木马"
+            }
+        ],
+        "condition": "contains(${name},'网银木马')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "木马"
+            },
+            {
+                "to": "classCAttackType",
+                "value": "窃密木马"
+            }
+        ],
+        "condition": "contains(${name},'窃密木马')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "木马"
+            },
+            {
+                "to": "classCAttackType",
+                "value": "远程控制木马"
+            }
+        ],
+        "condition": "contains(${name},'远程控制木马')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "木马"
+            },
+            {
+                "to": "classCAttackType",
+                "value": "流量劫持木马"
+            }
+        ],
+        "condition": "contains(${name},'流量劫持木马')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "木马"
+            },
+            {
+                "to": "classCAttackType",
+                "value": "下载者木马"
+            }
+        ],
+        "condition": "contains(${name},'下载者木马')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "网络蠕虫"
+            },
+            {
+                "to": "classCAttackType",
+                "value": "其他蠕虫"
+            }
+        ],
+        "condition": "${catTechnique}=='/Code/Worm' || contains(${name},'蠕虫') || regex(${name},'(?i:Worm)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "网络蠕虫"
+            },
+            {
+                "to": "classCAttackType",
+                "value": "邮件蠕虫"
+            }
+        ],
+        "condition": "contains(${name},'邮件蠕虫')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "网络蠕虫"
+            },
+            {
+                "to": "classCAttackType",
+                "value": "即时消息蠕虫"
+            }
+        ],
+        "condition": "contains(${name},'即时消息蠕虫')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "网络蠕虫"
+            },
+            {
+                "to": "classCAttackType",
+                "value": "U盘蠕虫"
+            }
+        ],
+        "condition": "contains(${name},'U盘蠕虫')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "网络蠕虫"
+            },
+            {
+                "to": "classCAttackType",
+                "value": "漏洞利用蠕虫"
+            }
+        ],
+        "condition": "contains(${name},'漏洞利用蠕虫')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "僵尸程序"
+            },
+            {
+                "to": "classCAttackType",
+                "value": "其他僵尸程序"
+            }
+        ],
+        "condition": "contains(${name},'僵尸程序')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "僵尸程序"
+            },
+            {
+                "to": "classCAttackType",
+                "value": "IRC僵尸程序"
+            }
+        ],
+        "condition": "contains(${name},'IRC僵尸程序')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "僵尸程序"
+            },
+            {
+                "to": "classCAttackType",
+                "value": "Http僵尸程序"
+            }
+        ],
+        "condition": "contains(${name},'Http僵尸程序')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "僵尸程序"
+            },
+            {
+                "to": "classCAttackType",
+                "value": "P2P僵尸程序"
+            }
+        ],
+        "condition": "contains(${name},'P2P僵尸程序')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "后门程序"
+            }
+        ],
+        "condition": "contains(${name},'后门') || regex(${name},'(?i:backdoor)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "间谍软件"
+            }
+        ],
+        "condition": "contains(${name},'间谍') || regex(${name},'(?i:spyware)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "恶意广告"
+            }
+        ],
+        "condition": "contains(${name},'广告') || regex(${name},'(?i:advertisement)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "键盘记录"
+            }
+        ],
+        "condition": "contains(${name},'键盘记录') || regex(${name},'(?i:keylogger)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "勒索软件"
+            }
+        ],
+        "condition": "contains(${name},'勒索') || regex(${name},'(?i:ransoware)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "黑市工具"
+            }
+        ],
+        "condition": "contains(${name},'黑市')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "流氓推广"
+            }
+        ],
+        "condition": "contains(${name},'流氓')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "混合攻击程序"
+            }
+        ],
+        "condition": "contains(${name},'混合攻击程序')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "恶意软件事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "网页内嵌恶意代码事件"
+            }
+        ],
+        "condition": "contains(${name},'页面') && contains(${name},'恶意代码')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "拒绝服务攻击事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "其它"
+            }
+        ],
+        "condition": "${catTechnique}=='/DoS' || contains(${name},'拒绝服务') || regex(${name},'(?i:DoS\\s*(?:攻击|attack))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "拒绝服务攻击事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "SYN Flood"
+            }
+        ],
+        "condition": "regex(${name},'(?i:SYN\\s*(?:洪水|Flood))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "拒绝服务攻击事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "UDP Flood"
+            }
+        ],
+        "condition": "regex(${name},'(?i:UDP\\s*(?:洪水|Flood))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "拒绝服务攻击事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "ICMP Flood"
+            }
+        ],
+        "condition": "regex(${name},'(?i:ICMP\\s*(?:洪水|Flood))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "拒绝服务攻击事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "ACK Flood"
+            }
+        ],
+        "condition": "regex(${name},'(?i:ACK\\s*(?:洪水|Flood))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "拒绝服务攻击事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "DNS Response Flood"
+            }
+        ],
+        "condition": "regex(${name},'(?i:DNS\\s*(?:响应洪水|response\\s*Flood))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "拒绝服务攻击事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "Http Flood"
+            }
+        ],
+        "condition": "regex(${name},'(?i:HTTP\\s*(?:洪水|Flood))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "拒绝服务攻击事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "LAND Flood"
+            }
+        ],
+        "condition": "regex(${name},'(?i:LAND\\s*(?:洪水|Flood))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "拒绝服务攻击事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "IGMP Flood"
+            }
+        ],
+        "condition": "regex(${name},'(?i:IGMP\\s*(?:洪水|Flood))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "拒绝服务攻击事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "TCP Flog误用"
+            }
+        ],
+        "condition": "regex(${name},'(?i:TCP Flog\\s*误用)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "拒绝服务攻击事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "Protocol Null Flood"
+            }
+        ],
+        "condition": "regex(${name},'(?i:Protocol\\s*Null\\s*(?:洪水|Flood))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "拒绝服务攻击事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "Https Flood"
+            }
+        ],
+        "condition": "regex(${name},'(?i:HTTPS\\s* (?:洪水|Flood))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "拒绝服务攻击事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "DNS Request Flood"
+            }
+        ],
+        "condition": "regex(${name},'(?i:DNS\\s*(?:请求洪水|request\\s*Flood))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "拒绝服务攻击事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "SIP Flood"
+            }
+        ],
+        "condition": "regex(${name},'(?i:SIP\\s* (?:洪水|Flood))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "拒绝服务攻击事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "DARK IP"
+            }
+        ],
+        "condition": "regex(${name},'(?i:DARK\\s*IP)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "拒绝服务攻击事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "PRIVATE IP"
+            }
+        ],
+        "condition": "regex(${name},'(?i:PRIVATE\\s*IP)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "拒绝服务攻击事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "NTP REPLECTION Flood"
+            }
+        ],
+        "condition": "regex(${name},'(?i:NTP\\s*REPLECTION\\s*(?:洪水|Flood))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "拒绝服务攻击事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "SSDP REPLECTION Flood"
+            }
+        ],
+        "condition": "regex(${name},'(?i:SSDP\\s*REPLECTION\\s*(?:洪水|Flood))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "拒绝服务攻击事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "SNMP REPLECTION Flood"
+            }
+        ],
+        "condition": "regex(${name},'(?i:SNMP\\s*REPLECTION\\s*(?:洪水|Flood))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "拒绝服务攻击事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "CHARGEN REPLECTION Flood"
+            }
+        ],
+        "condition": "regex(${name},'(?i:CHARGEN\\s*REPLECTION\\s*(?:洪水|Flood))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "拒绝服务攻击事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "TRRAFFIC ABNORMAL"
+            }
+        ],
+        "condition": "regex(${name},'(?i:TRRAFFIC ABNORMAL|流量异常)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "侦察事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "其它"
+            }
+        ],
+        "condition": "${catTechnique}=='/Scan' || ${catTechnique}=='/Scan/Service' || ${catTechnique}=='/Scan/IPProtocol' || ${catTechnique}=='/Scan/Vulnerability' || contains(${name},'扫描') || contains(${name},'探测') || contains(${name},'侦测') || contains(${name},'嗅探') || regex(${name},'(?i:Scan)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "侦察事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "端口扫描"
+            }
+        ],
+        "condition": "${catTechnique}=='/Scan/Port' || contains(${name},'端口扫描')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "侦察事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "主机查询"
+            }
+        ],
+        "condition": "${catTechnique}=='/Scan/Host' || contains(${name},'主机扫描')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "侦察事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "应用程序查询"
+            }
+        ],
+        "condition": "regex(${name},'应用程序(扫描|探测|嗅探)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "侦察事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "数据库侦察"
+            }
+        ],
+        "condition": "regex(${name},'数据库(扫描|探测|嗅探)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "侦察事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "DNS侦察"
+            }
+        ],
+        "condition": "regex(${name},'(?i:DNS\\s* (扫描|探测|嗅探))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "侦察事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "FTP侦察"
+            }
+        ],
+        "condition": "regex(${name},'(?i:FTP\\s* (扫描|探测|嗅探))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "侦察事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "SNMP侦察"
+            }
+        ],
+        "condition": "regex(${name},'(?i:SNMP\\s* (扫描|探测|嗅探))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "侦察事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "SSH侦察"
+            }
+        ],
+        "condition": "regex(${name},'(?i:SSH\\s* (扫描|探测|嗅探))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "侦察事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "Telnet侦察"
+            }
+        ],
+        "condition": "regex(${name},'(?i:Telnet\\s* (扫描|探测|嗅探))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "侦察事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "邮件侦察"
+            }
+        ],
+        "condition": "regex(${name},'邮件(扫描|探测|嗅探)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "侦察事件"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "网络扫描"
+            }
+        ],
+        "condition": "regex(${name},'网络(扫描|探测|嗅探)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "可疑活动"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "其它"
+            }
+        ],
+        "condition": "regex(${name},'可疑(活动|访问|连接|链接)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "可疑活动"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "DNS异常"
+            }
+        ],
+        "condition": "regex(${name},'(?i:DNS\\s*(异常|abnormal))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "可疑活动"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "FTP异常"
+            }
+        ],
+        "condition": "regex(${name},'(?i:FTP\\s*(异常|abnormal))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "可疑活动"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "邮件异常"
+            }
+        ],
+        "condition": "regex(${name},'(?i:邮件\\s*(异常|abnormal))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "可疑活动"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "路由异常"
+            }
+        ],
+        "condition": "regex(${name},'(?i:(路由|router)\\s*(异常|abnormal))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "可疑活动"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "SQL异常"
+            }
+        ],
+        "condition": "regex(${name},'(?i:SQL\\s*(异常|abnormal))')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "可疑活动"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "可疑的应用程序"
+            }
+        ],
+        "condition": "regex(${name},'(?i:可疑(?:的)?应用程序)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "可疑活动"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "可疑文件"
+            }
+        ],
+        "condition": "regex(${name},'(?i:可疑(?:的)?文件)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "可疑活动"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "可疑的ICMP活动"
+            }
+        ],
+        "condition": "regex(${name},'(?i:可疑(?:的)?ICMP)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "可疑活动"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "可疑的IP地址"
+            }
+        ],
+        "condition": "regex(${name},'(?i:可疑(?:的)?IP)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "可疑活动"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "可疑的数据包"
+            }
+        ],
+        "condition": "regex(${name},'(?i:可疑(?:的)?数据包)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "可疑活动"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "可疑的端口活动"
+            }
+        ],
+        "condition": "regex(${name},'(?i:可疑(?:的)?端口活动)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "可疑活动"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "可疑的路由"
+            }
+        ],
+        "condition": "regex(${name},'(?i:可疑(?:的)?路由)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "可疑活动"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "可疑的SSL或加密"
+            }
+        ],
+        "condition": "regex(${name},'(?i:可疑(?:的)?SSL)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "可疑活动"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "可疑的VPN"
+            }
+        ],
+        "condition": "${deviceCat}=='/VPN' && ${catTechnique}=='/InformationLeak/UnauthorizedAccess'",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "可疑活动"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "可疑的Windows事件"
+            }
+        ],
+        "condition": "${deviceProductType}=='Windows' && ${severity.int}>=6",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "可疑活动"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "未知应用程序"
+            }
+        ],
+        "condition": "contains(${name},'未知应用程序') ",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "可疑活动"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "未知客户端"
+            }
+        ],
+        "condition": "contains(${name},'未知客户端') ",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "可疑活动"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "未知用户"
+            }
+        ],
+        "condition": "regex(${name},'(?i:UNKNOW\\s*User|未知用户)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "可疑活动"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "未解析的设备消息"
+            }
+        ],
+        "condition": "${eventType.int}==0",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "classAAttackType",
+                "value": "可疑活动"
+            },
+            {
+                "to": "classBAttackType",
+                "value": "Web异常"
+            }
+        ],
+        "condition": "${requestUrl}!=null && regex(${responseCod},'(?i:^(?:4|5)\\d{2}$)')",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "protocol",
+                "value": "func(toVal(${transProtocol}))"
+            }
+        ],
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "app",
+                "value": "func(toVal(${appProtocol}))"
+            }
+        ],
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "action",
+                "value": "func(toVal(${dvcAction}))"
+            }
+        ],
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "profile",
+                "value": "func(toVal(${ruleName}))"
+            }
+        ],
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "profile_Id",
+                "value": "func(toVal(${ruleId}))"
+            }
+        ],
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "file_name",
+                "value": "func(toVal(${fileName}))"
+            }
+        ],
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "url",
+                "value": "func(toVal(${requestUrl}))"
+            }
+        ],
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "repeat",
+                "value": "func(toVal(${eventCount}))"
+            }
+        ],
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "method",
+                "value": "func(toVal(${requestMethod}))"
+            }
+        ],
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "virus_Type",
+                "value": "func(toVal(${virusType}))"
+            }
+        ],
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "virus_Name",
+                "value": "func(toVal(${virusName}))"
+            }
+        ],
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "http_args",
+                "value": "func(toVal(${requestUrlQuery}))"
+            },
+            {
+                "to": "http_method",
+                "value": "func(toVal(${requestMethod}))"
+            },
+            {
+                "to": "http_useragent",
+                "value": "func(toVal(${accessAgent}))"
+            },
+            {
+                "to": "http_status",
+                "value": "func(toVal(${responseCode}))"
+            },
+            {
+                "to": "http_reffer",
+                "value": "func(toVal(${httpReffer}))"
+            },
+            {
+                "to": "rule_Id",
+                "value": "func(toVal(${ruleId}))"
+            },
+            {
+                "to": "action_data",
+                "value": "func(toVal(${dvcAction}))"
+            }
+        ],
+        "condition": "${deviceCat}=='/Audit/Web'",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "host",
+                "value": "func(toVal(${destHostName}))"
+            }
+        ],
+        "condition": "${deviceCat}=='/Audit/Web' && ${destHostName}!=null",
+        "enable": true
+    },
+    {
+        "mapping": [
+            {
+                "to": "host",
+                "value": "func(toVal(${destAddress}))"
+            }
+        ],
+        "condition": "${deviceCat}=='/Audit/Web' && ${destHostName}==null",
+        "enable": true
+    }
+]
